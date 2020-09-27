@@ -1,8 +1,10 @@
 package com.note4com.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "notes")
@@ -10,20 +12,16 @@ public class Notes {
 	
 	@Id
 	private String id;
-
+	
+	@TextIndexed
 	private String username;
 	
+	@TextIndexed
 	private String title;
 	
-	private Set<Content> contents;
+	private Set<Content> contents = new HashSet<Content>();
 	
 	private String category;
-	
-	private boolean published;
-
-	public Notes() {
-
-	}
 
 	public String getId() {
 		return id;
@@ -31,6 +29,14 @@ public class Notes {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getTitle() {
@@ -55,14 +61,6 @@ public class Notes {
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public boolean isPublished() {
-		return published;
-	}
-
-	public void setPublished(boolean published) {
-		this.published = published;
 	}
 
 }

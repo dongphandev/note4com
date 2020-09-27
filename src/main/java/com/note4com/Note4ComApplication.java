@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootDataMongodbApplication {
-
+public class Note4ComApplication {
+	 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootDataMongodbApplication.class, args);
+		SpringApplication.run(Note4ComApplication.class, args);
 	}
 
 }

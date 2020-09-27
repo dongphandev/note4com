@@ -1,0 +1,20 @@
+purpose
+goal=long term 
+target=the exact thing one or organization want to acchive
+objective=short term
+-
+Change something
+Change=a change in general
+Alter=a small change
+vary=...
+-
+Continue to do something
+continuous=no interruption, 
+continual=like interval, start and stop, and start again
+consecutive=day after day, event after event..., not interrupted
+-
+Find something
+Find=..
+seek=..
+looking for=..
+search=...

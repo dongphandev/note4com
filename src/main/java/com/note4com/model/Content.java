@@ -1,7 +1,11 @@
 package com.note4com.model;
 
+import org.springframework.data.mongodb.core.index.TextIndexed;
+
 public class Content {
+	@TextIndexed
 	private String key;
+	@TextIndexed
 	private String note;
 	private String ref;
 	public String getKey() {
