@@ -13,8 +13,8 @@ import com.note4com.model.Notes;
 import com.note4com.repository.NotesRepository;
 
 @Service
-public class NotesServiceImpl implements NotesService{
-	
+public class NotesServiceImpl implements NotesService {
+
 	@Autowired
 	NotesRepository noteRepository;
 
@@ -22,13 +22,17 @@ public class NotesServiceImpl implements NotesService{
 		List<Notes> notes = new ArrayList<Notes>();
 		Pageable request = PageRequest.of(0, 10);
 		noteRepository.findByUsername(username, request).forEach(notes::add);
-		System.out.println("+++++++++++++"+notes.size());
 		return notes;
 	}
 
 	public String createNote(Notes note) {
-		Notes re = noteRepository.save(note);
+		Notes re = noteRepository.insert(note);
 		return re.getId();
+	}
+
+	@Override
+	public void updateNote(Notes note) {
+		noteRepository.save(note);
 	}
 
 }

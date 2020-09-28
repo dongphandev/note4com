@@ -1,0 +1,16 @@
+Dien thoai
+Iphone=Chay nhanh, nhieu áp
+Samsung=nhieu ap, chay 
+HTC=Pin dễ hư,dê chai
+-
+Tivi
+Samsung=
+Panasonic=
+Toshiba=
+-
+May giay
+Toshiba=tiéng động lớn
+Dakin= chay em
+-
+DulichCanTho=do an ngon, xe du lich
+DulichBentre= nieu 
