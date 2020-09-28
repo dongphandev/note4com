@@ -1,4 +1,4 @@
-package com.note4com.service.manual;
+package com.note4com.service.core;
 
 import java.util.ArrayList;
 import java.util.List;

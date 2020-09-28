@@ -17,7 +17,7 @@ import com.note4com.model.Content;
 import com.note4com.model.Notes;
 import com.note4com.repository.NotesRepository;
 import com.note4com.service.batch.BatchInsertData;
-import com.note4com.service.manual.NotesService;
+import com.note4com.service.core.NotesService;
 
 @RestController
 @RequestMapping("/api")
