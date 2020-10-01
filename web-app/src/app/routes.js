@@ -1,24 +1,39 @@
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, Switch, Redirect } from 'react-router';
 
-import { scrollToTop } from './utils/ui';
+import { scrollToTop } from '../utils/ui';
 
 import App from './index';
+import UniversalTemplate from './templates/UniversalTemplate';
+
+import Dashboard from '../modules/Dashboard';
+import SignIn from '../modules/SignIn';
 
 
 export default ({ history }) => {
     return (
         <Router history={history}>
-            {/* <Redirect from="/home" to="/dashboard" /> */}
-            <Route path="page" component={Shop} onChange={()=>{scrollToTop()}}>
-                <Route path="dashboard" component={Dashboard} />
-                <Route path="notes" component={NotFound} />
+            <Route path="/" onChange={() => { scrollToTop() }}>
+                <App>
+                    <Switch>
+                        <Route path="/page">
+                            <UniversalTemplate>
+                                <Switch>
+                                    <Route path="/page/dashboard" component={Dashboard} />
+                                    <Route path="/page/notes" component={Dashboard} />
+                                    <Route path="/page/login" component={SignIn} />
 
-                
-                <Route path='*' exact={true} component={NotFound} />
-            </Route>
-            <Route path="/">
-                <IndexRoute component={App} />
+                                    <Route path='*' exact>
+                                        <Redirect to="/page/dashboard"/>
+                                    </Route>
+                                </Switch>
+                            </UniversalTemplate>
+                        </Route>
+                        <Route path='*' exact>
+                            <Redirect to="/page/dashboard"/>
+                        </Route>
+                    </Switch>
+                </App>
             </Route>
         </Router>
     );

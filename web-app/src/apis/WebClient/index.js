@@ -10,7 +10,7 @@ axios.defaults.timeout = 60000; // 60 seconds
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
-  // config.headers['X-TSHOP-AUTH-TOKEN'] = getLocalData('TSHOP-AUTH-TOKEN');
+  // config.headers['X-AUTH-TOKEN'] = getLocalData('AUTH-TOKEN');
   config.headers['Content-Type'] = 'application/json';
   config.headers['X-Tenant'] = 'dev';
   return config;

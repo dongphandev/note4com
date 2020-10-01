@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import history from 'history/browser';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
@@ -20,26 +20,18 @@ const configureStore = initialState => {
 };
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const browserHistory = syncHistoryWithStore(history, store);
 
 const renderAppContainer = (RootComponent) => {
   // (https://github.com/reactjs/react-redux/issues/259)
   ReactDOM.render(
-      <AppContainer>
-        <Provider store={store}>
-          <RootComponent history={history} />
-        </Provider>
-      </AppContainer>,
+      <Provider store={store}>
+        <RootComponent history={browserHistory} />
+      </Provider>,
       document.getElementById('root')
   );
 };
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

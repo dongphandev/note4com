@@ -1,11 +1,11 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import history from 'history/browser'; 
 
 const NotFound = (props) => (
     <div>
         <h2>Not found!'</h2>
         <div>
-            <button onClick={() => { browserHistory.goBack() }} >Go Back</button>
+            <button onClick={() => { history.back() }} >Go Back</button>
         </div>
     </div>
 );
