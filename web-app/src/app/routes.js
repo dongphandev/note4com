@@ -1,40 +1,35 @@
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router';
-
-import { scrollToTop } from '../utils/ui';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 import App from './index';
 import UniversalTemplate from './templates/UniversalTemplate';
 
-import Dashboard from '../modules/Dashboard';
+import Note from '../modules/Note';
 import SignIn from '../modules/SignIn';
 
 
-export default ({ history }) => {
+export default () => {
     return (
-        <Router history={history}>
-            <Route path="/" onChange={() => { scrollToTop() }}>
-                <App>
-                    <Switch>
-                        <Route path="/page">
-                            <UniversalTemplate>
-                                <Switch>
-                                    <Route path="/page/dashboard" component={Dashboard} />
-                                    <Route path="/page/notes" component={Dashboard} />
-                                    <Route path="/page/login" component={SignIn} />
+        <Router>
+            <App>
+                <Switch>
+                    <Route path="/page" on>
+                        <UniversalTemplate>
+                            <Switch>
+                                <Route path="/page/notes" component={Note} />
+                                <Route path="/page/login" component={SignIn} />
 
-                                    <Route path='*' exact>
-                                        <Redirect to="/page/dashboard"/>
-                                    </Route>
-                                </Switch>
-                            </UniversalTemplate>
-                        </Route>
-                        <Route path='*' exact>
-                            <Redirect to="/page/dashboard"/>
-                        </Route>
-                    </Switch>
-                </App>
-            </Route>
+                                <Route path='*' exact>
+                                    <Redirect to="/page/notes"/>
+                                </Route>
+                            </Switch>
+                        </UniversalTemplate>
+                    </Route>
+                    <Route path='*' exact>
+                        <Redirect to="/page/notes" />
+                    </Route>
+                </Switch>
+            </App>
         </Router>
     );
 }

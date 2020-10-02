@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import history from 'history/browser';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -20,13 +18,12 @@ const configureStore = initialState => {
 };
 
 const store = configureStore();
-const browserHistory = syncHistoryWithStore(history, store);
 
 const renderAppContainer = (RootComponent) => {
   // (https://github.com/reactjs/react-redux/issues/259)
   ReactDOM.render(
       <Provider store={store}>
-        <RootComponent history={browserHistory} />
+        <RootComponent />
       </Provider>,
       document.getElementById('root')
   );
