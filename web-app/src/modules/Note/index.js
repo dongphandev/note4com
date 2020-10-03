@@ -1,53 +1,73 @@
-import { node } from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { search, load, create, update } from './actions';
+import AppActions from '../../app/actions';
+import * as Utils from '../../utils';
 
 import SearchBox from '../../components/SearchBox';
 import VSpace from '../../components/VSpace';
 import Box from './Box';
 
-let notes = [
-  {
-    theme: "bg-light"
-  },
-  {
-    theme: "text-white bg-danger" 
-  },
-  {
-    theme: "text-white bg-secondary"
-  },
-  {
-    theme: "text-white bg-success"
-  },
-  {
-    theme: "text-white bg-primary"
-  },
-  {
-    theme: "text-white bg-warning"
-  },
-  {
-    theme: "text-white bg-info"
-  },
-  {
-    theme: "text-white bg-dark"
+// const THEMES = [
+//   "bg-light",
+//   "text-white bg-danger",
+//   "text-white bg-secondary",
+//   "text-white bg-success",
+//   "text-white bg-primary",
+//   "text-white bg-warning",
+//   "text-white bg-info",
+//   "text-white bg-dark"
+// ];
+
+
+class Note extends React.Component {
+
+  handleLoad = () => {
+    let username = this.props.auth.owner;
+    this.props.load({username});
   }
-]
 
-function Note() {
-  return (
-    <div className="container">      
-      <SearchBox style={{paddingTop: 10}} />
+  handleSearch = (text) => {
+    let username = this.props.auth.owner;
+    this.props.search({
+      username: username,
+      keyword: text
+    });
+  }
 
-      <div style={{textAlign:"center"}}>
-        <button style={{width:200}} type="button" className="btn btn-primary"><strong>+</strong></button>
+  componentWillMount() {
+    this.handleLoad();
+  }
+
+  render() {
+    const { list, data } = this.props;
+
+    return (
+      <div className="container">
+        <SearchBox style={{ paddingTop: 10 }} onSearch={this.handleSearch} />
+
+        <div style={{ textAlign: "center" }}>
+          <button style={{ width: 200 }} type="button" className="btn btn-primary"><strong>+</strong></button>
+        </div>
+
+        <VSpace />
+        { list.map((id, i) =>
+          <Box key={i} model={data[id]} />
+        )}
+
       </div>
+    );
+  }
 
-      <VSpace />
-      { notes.map((note,i) => 
-        <Box key={i} {...note} />
-      )}
-
-    </div>
-  );
 }
 
-export default Note;
+const mapStateToProps = state => ({
+  ...state.note,
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { load, search, create, update}
+)(Note);

@@ -8,11 +8,16 @@ export default function note(
     { type, payload }
 ) {
     switch (type) {
-        case types.AUTHENTICATED:
+        case types.LOAD:
             return {
-                authenticated: true,
-                token: payload.token,
-                model: payload.model
+                list: payload.list,
+                data: payload.data
+            };
+        
+        case types.SEARCH:
+            return {
+                list: payload.list,
+                data: payload.data
             };
         
         default:

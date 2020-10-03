@@ -8,11 +8,11 @@ let styles = {
   }
 }
 
-function Block({ theme = "" }) {
+function Block({model}) {
   return (
     <blockquote className="blockquote mb-2" style={styles.blockquote}>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+      <p>{model.key}</p>
+      <footer className="blockquote-footer">{model.note}</footer>
     </blockquote>
   );
 }
