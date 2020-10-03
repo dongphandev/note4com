@@ -1,7 +1,12 @@
 // https://github.com/axios/axios
 import axios from 'axios';
 // import { getLocalData } from './ui';
-import { ERROR_CODES } from '../constants/APIs';
+
+export const ApiError = {
+  request: "request",
+  response: "response",
+  unknown: "unknown"
+}
 
 // basic configs
 // axios.defaults.baseURL = 'http://localhost:7070';
@@ -12,7 +17,6 @@ axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   // config.headers['X-AUTH-TOKEN'] = getLocalData('AUTH-TOKEN');
   config.headers['Content-Type'] = 'application/json';
-  config.headers['X-Tenant'] = 'dev';
   return config;
 }, function (error) {
   // Do something with request error
@@ -21,12 +25,13 @@ axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
+  console.log(response);
   // Do something with response data
-  if (response.data.error) {
-    const error = response.data.error;
-    return Promise.reject({ code: error.code, message: error.message });
-  }
-  return response.data.success;
+  // if (response.data.error) {
+  //   const error = response.data.error;
+  //   return Promise.reject({ code: error.code, message: error.message });
+  // }
+  return response.data;
 }, function (error) {
   // Do something with response error
   return handleError(error);
@@ -35,18 +40,15 @@ axios.interceptors.response.use(function (response) {
 // Promise.reject(error);
 
 function handleError(error) {
-  console.log(error.config);
+  console.log(error);
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
     if (error.response.data && error.response.data.error) {
       return Promise.reject({ code: error.response.data.error.code, message: error.response.data.error.message });
     }
 
-    return Promise.reject({ code: ERROR_CODES.response, message: error.response.data });
+    return Promise.reject({ code: ApiError.response, message: error.response.data });
   }
 
   if (error.request) {
@@ -55,12 +57,12 @@ function handleError(error) {
     // http.ClientRequest in node.js
     console.log(error.request);
 
-    return Promise.reject({ code: ERROR_CODES.request, message: error.request });
+    return Promise.reject({ code: ApiError.request, message: error.request });
   }
 
   // Something happened in setting up the request that triggered an Error
   console.log('Error', error.message);
-  return Promise.reject({ code: ERROR_CODES.unknown, message: error.message });
+  return Promise.reject({ code: ApiError.unknown, message: error.message });
 }
 
 

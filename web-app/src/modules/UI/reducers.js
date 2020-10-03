@@ -1,13 +1,13 @@
-import types from '../actions/app';
+import types from './actions';
 
-export default function app(
+export default function ui(
     state = {
         notification: {
-            display: false,
+            show: false,
             message: ''
         },
         loading: {
-            display: false,
+            show: false,
             targets:[]
         }
     },
@@ -22,7 +22,7 @@ export default function app(
             return {
                 ...state,
                 loading: {
-                    display: true,
+                    show: true,
                     targets
                 }
             };
@@ -33,7 +33,7 @@ export default function app(
             return {
                 ...state,
                 loading: {
-                    display: targets.length !== 0,
+                    show: targets.length !== 0,
                     targets
                 }
             };
@@ -41,7 +41,7 @@ export default function app(
             return {
                 ...state,
                 notification: {
-                    display: true,
+                    show: true,
                     message: payload.message
                 }
             };
@@ -49,7 +49,7 @@ export default function app(
             return {
                 ...state,
                 notification: {
-                    display: false,
+                    show: false,
                     message: ''
                 }
             };
