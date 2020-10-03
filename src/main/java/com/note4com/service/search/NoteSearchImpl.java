@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.note4com.model.Notes;
 import com.note4com.repository.NotesRepository;
 import com.note4com.service.dto.NotesSearchDto;
 
+@Service
 public class NoteSearchImpl implements NoteSearch {
 	@Autowired
 	NotesRepository noteRepository;
