@@ -4,11 +4,12 @@ export const types = {
 };
 export default types;
 
-export function authenticated({token, model}) {
+export function authenticated({token, owner, model}) {
   return {
       type: types.AUTHENTICATED,
       payload: {
         token,
+        owner,
         model
       }
   };

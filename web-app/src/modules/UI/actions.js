@@ -1,3 +1,5 @@
+import history from '../../app/history';
+
 export const types = {
   SHOW_LOADING: 'UI/SHOW_LOADING',
   HIDE_LOADING: 'UI/HIDE_LOADING',
@@ -5,6 +7,10 @@ export const types = {
   HIDE_NOTIFICATION: 'UI/HIDE_NOTIFICATION',
 };
 export default types;
+
+export function navigate({to}) {
+  history.push(to);
+}
 
 export function hideNotification() {
   return {

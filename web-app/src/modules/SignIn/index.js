@@ -1,19 +1,36 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
+
 import { submit } from './actions';
+import AppActions from '../../app/actions';
+import * as Utils from '../../utils';
 
 function SignIn(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  if (props.authenticated) {
+    return <Redirect to='/page/notes' />
+  }
+
+  const isValid = () => {
+    return Utils.isNotEmtpy(username) && Utils.isNotEmtpy(password);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.submit(username, password);
-  }
+    if (isValid()) {
+      props.submit(username, password);
+    } else {
+      props.showNotification("Please input 'Email' and 'Password'");
+    }
+  };
 
   return (
     <div className="container" style={{maxWidth:500}}>
       <h1>Sign In</h1>
+      <h4>Welcome to note4com!</h4>
       <form>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
@@ -35,10 +52,11 @@ function SignIn(props) {
 }
 
 const mapStateToProps = state => ({
-  ...state.signin
+  ...state.signin,
+  authenticated: state.auth.authenticated
 });
 
 export default connect(
   mapStateToProps,
-  { submit }
+  { submit, showNotification: AppActions.UI.showNotification }
 )(SignIn);

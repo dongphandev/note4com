@@ -1,13 +1,9 @@
 import types from './actions';
 
-export default function auth(
+export default function note(
     state = {
-        authenticated: false,
-        token: '',
-        owner: '',
-        model: {
-            
-        }
+        list: [],
+        data: { }
     },
     { type, payload }
 ) {
@@ -16,7 +12,6 @@ export default function auth(
             return {
                 authenticated: true,
                 token: payload.token,
-                owner: payload.owner,
                 model: payload.model
             };
         

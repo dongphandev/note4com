@@ -1,0 +1,71 @@
+[
+  {
+    "id": "5f707b61339990d2e0762ce7",
+    "username": "user_en",
+    "title": "purpose",
+    "contents": [
+      {
+        "key": "goal",
+        "note": "long term",
+        "ref": null
+      },
+      {
+        "key": "target",
+        "note": "the exact thing one or organization want to acchive",
+        "ref": null
+      },
+      {
+        "key": "objective",
+        "note": "short term",
+        "ref": null
+      }
+    ],
+    "category": "Language"
+  },
+  {
+    "id": "5f707b61339990d2e0762ce8",
+    "username": "user_en",
+    "title": "Change something",
+    "contents": [
+      {
+        "key": "Change",
+        "note": "a change in general",
+        "ref": null
+      },
+      {
+        "key": "Alter",
+        "note": "a small change",
+        "ref": null
+      },
+      {
+        "key": "vary",
+        "note": "...",
+        "ref": null
+      }
+    ],
+    "category": "Language"
+  },
+  {
+    "id": "5f707b62339990d2e0762ce9",
+    "username": "user_en",
+    "title": "Continue to do something",
+    "contents": [
+      {
+        "key": "continuous",
+        "note": "no interruption,",
+        "ref": null
+      },
+      {
+        "key": "consecutive",
+        "note": "day after day, event after event..., not interrupted",
+        "ref": null
+      },
+      {
+        "key": "continual",
+        "note": "like interval, start and stop, and start again",
+        "ref": null
+      }
+    ],
+    "category": "Language"
+  }
+]

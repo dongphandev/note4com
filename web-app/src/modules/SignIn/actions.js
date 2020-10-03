@@ -8,32 +8,23 @@ export const types = {
 };
 export default types;
 
-export function submit({ username, password }) {
+export function submit(username, password) {
   return (dispatch, getState) => {
     // show loadding
-    dispatch(Accions.UI.showLoading(types.SUBMIT))
-
-
-    // dispatch({
-    //   type: types.SUBMIT,
-    //   payload: {
-    //     model: {
-    //       username,
-    //       password
-    //     }
-    //   }
-    // });
+    dispatch(Accions.UI.showLoading(types.SUBMIT));
 
     // submit
     HttpClient.post(AuthUrl.login(), {username, password})
     .then(resp => {
-      console.log(resp)
-
-      dispatch(Accions.UI.hideLoading(types.SUBMIT))
+      dispatch(Accions.Auth.authenticated({
+        token: "draft-token",
+        owner: username
+      }));
+      dispatch(Accions.UI.hideLoading(types.SUBMIT));
     }).catch(err => {
       console.log(err);
-      dispatch(Accions.UI.showNotification("FAILED"))
-      dispatch(Accions.UI.hideLoading(types.SUBMIT))
+      dispatch(Accions.UI.showNotification(err.message));
+      dispatch(Accions.UI.hideLoading(types.SUBMIT));
     });
   };
 }

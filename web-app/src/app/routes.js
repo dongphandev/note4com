@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
+import history from './history';
 import App from './index';
 import UniversalTemplate from './templates/UniversalTemplate';
 
@@ -10,14 +11,13 @@ import SignIn from '../modules/SignIn';
 
 export default () => {
     return (
-        <Router>
+        <Router history={history}>
             <App>
                 <Switch>
-                    <Route path="/page" on>
+                    <Route path="/page">
                         <UniversalTemplate>
                             <Switch>
                                 <Route path="/page/notes" component={Note} />
-                                <Route path="/page/login" component={SignIn} />
 
                                 <Route path='*' exact>
                                     <Redirect to="/page/notes"/>
@@ -25,6 +25,7 @@ export default () => {
                             </Switch>
                         </UniversalTemplate>
                     </Route>
+                    <Route path="/login" component={SignIn} />
                     <Route path='*' exact>
                         <Redirect to="/page/notes" />
                     </Route>

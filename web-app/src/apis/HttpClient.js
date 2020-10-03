@@ -1,6 +1,5 @@
 // https://github.com/axios/axios
 import axios from 'axios';
-// import { getLocalData } from './ui';
 
 export const ApiError = {
   request: "request",
@@ -37,32 +36,9 @@ axios.interceptors.response.use(function (response) {
   return handleError(error);
 });
 
-// Promise.reject(error);
-
 function handleError(error) {
   console.log(error);
-  if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
-    if (error.response.data && error.response.data.error) {
-      return Promise.reject({ code: error.response.data.error.code, message: error.response.data.error.message });
-    }
-
-    return Promise.reject({ code: ApiError.response, message: error.response.data });
-  }
-
-  if (error.request) {
-    // The request was made but no response was received
-    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    // http.ClientRequest in node.js
-    console.log(error.request);
-
-    return Promise.reject({ code: ApiError.request, message: error.request });
-  }
-
-  // Something happened in setting up the request that triggered an Error
-  console.log('Error', error.message);
-  return Promise.reject({ code: ApiError.unknown, message: error.message });
+  return Promise.reject({ code: ApiError.unknown, message: error.message, error });
 }
 
 

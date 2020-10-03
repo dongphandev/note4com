@@ -16,6 +16,7 @@ import com.note4com.model.Notes;
 import com.note4com.service.dto.UserDto;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
 	@PostMapping(value = "/login")
