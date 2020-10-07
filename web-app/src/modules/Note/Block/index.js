@@ -8,7 +8,7 @@ let styles = {
   }
 }
 
-function Block({model}) {
+function Block({model, onChange, selected}) {
   return (
     <blockquote className="blockquote mb-2" style={styles.blockquote}>
       <p>{model.key}</p>

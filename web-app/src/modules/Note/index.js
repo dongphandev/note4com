@@ -36,6 +36,12 @@ class Note extends React.Component {
     });
   }
 
+  handleNoteChange = ({type, payload}) => {
+    if (type === 'update') {
+      this.props.update(payload);
+    }
+  }
+
   componentWillMount() {
     this.handleLoad();
   }
@@ -53,13 +59,12 @@ class Note extends React.Component {
 
         <VSpace />
         { list.map((id, i) =>
-          <Box key={i} model={data[id]} />
+          <Box key={i} model={data[id]} onChange={this.handleNoteChange} />
         )}
 
       </div>
     );
   }
-
 }
 
 const mapStateToProps = state => ({

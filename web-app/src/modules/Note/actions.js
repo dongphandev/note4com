@@ -104,7 +104,7 @@ export function update(model) {
         console.log(resp)
         dispatch({
           type: actionName,
-          payload: resp
+          payload: model
         })
 
         dispatch(Accions.UI.hideLoading(actionName));

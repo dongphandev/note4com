@@ -19,7 +19,16 @@ export default function note(
                 list: payload.list,
                 data: payload.data
             };
-        
+
+        case types.UPDATE:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [payload.key]: payload
+                }
+            };
+
         default:
             return state;
     }

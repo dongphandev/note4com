@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import Block from '../Block';
 
@@ -14,7 +14,69 @@ let styles = {
 }
 const DEF_THEME = "bg-light";
 
-function Box({model}) {
+export default ({model, onChange}) => {
+  const [edit, setEdit] = useState(null);
+  const [editText, setEditText] = useState('');
+  const selectedBlock = edit === null ? null : edit.key;
+
+  const handleEditTextChange = (e) => {
+    setEditText(e.target.value);
+  }
+
+  const handleBlockChange = ({type, payload}) => {
+    // click update button
+    if (type === 'update') {
+      setEdit(payload);
+
+    } else {
+      // click delete button
+      const newModel = {
+        ...model,
+        contents: model.contents.filter(item => item.key != payload.key)
+      };
+      onChange({type: 'update', newModel});
+    }
+  }
+
+  const handleSave = () => {
+    // TODO validate inputed info
+
+  }
+
+  const handleAdd = () => {
+    // TODO validate inputed info
+
+  }
+
+  const renderActions = () => {
+    if (edit) {
+      return (
+        <div className="input-group-append">
+          <button 
+            className="btn btn-outline-secondary" 
+            type="button"
+            onClick={handleSave}
+          >Save</button>
+          <button 
+            className="btn btn-outline-default" 
+            type="button"
+            onClick={() => setEdit(null)}
+          >Cancel</button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="input-group-append">
+        <button 
+          className="btn btn-outline-secondary" 
+          type="button"
+          onClick={handleAdd}
+        >Add</button>
+      </div>
+    );
+  }
+
   return (
     <div className="card mb-3">
       <div className={`card-header ${DEF_THEME}`}>
@@ -28,18 +90,25 @@ function Box({model}) {
         </span>
       </div>
       <div className="card-body">
-        {model.contents && model.contents.map((item, i) => <Block key={i} style={styles.blockquote} model={item} />)}
+        {model.contents && model.contents.map((item, i) => <Block 
+          key={i} style={styles.blockquote} 
+          model={item} 
+          onChange={handleBlockChange} 
+          selected={item.key === selectedBlock} 
+        />)}
       </div>
       <div className="card-footer" style={{ padding: 0 }}>
         <div className="input-group">
-          <textarea style={styles.textarea} className="form-control" row="3"></textarea>
-          <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="button" id="button-addon2"><strong>+</strong></button>
-          </div>
+          <textarea 
+            defaultValue={editText}
+            onChange={handleEditTextChange}
+            style={styles.textarea} 
+            className="form-control" 
+            row="3" />
+          {renderActions()}
         </div>
       </div>
     </div>
   );
 }
 
-export default Box;
