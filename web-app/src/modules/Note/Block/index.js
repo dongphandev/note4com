@@ -1,6 +1,7 @@
 import React from 'react';
+import DropDown from '../../../components/DropDown';
 
-let styles = {
+const styles = {
   blockquote: {
     borderLeft: "solid lightgrey 5px",
     paddingLeft: 5,
@@ -8,11 +9,29 @@ let styles = {
   }
 }
 
-function Block({model, onChange, selected}) {
+const blockActions = [
+  {
+    id: 'edit',
+    name: 'Edit'
+  },
+  {
+    id: 'delete',
+    name: 'Delete'
+  }
+];
+
+function Block({ model, selected, onChange }) {
+  let notes = model.note ? model.note.split('\n') : [];
+
+  const handleClick = (actionId) => {
+    console.log(actionId);
+  }
+
   return (
     <blockquote className="blockquote mb-2" style={styles.blockquote}>
+      <DropDown styles={{float:'right'}} items={blockActions} onClick={handleClick} />
       <p>{model.key}</p>
-      <footer className="blockquote-footer">{model.note}</footer>
+      {notes && notes.map((val, k) => val.trim() != '' && <footer key={k} className="blockquote-footer">{val}</footer>)}
     </blockquote>
   );
 }

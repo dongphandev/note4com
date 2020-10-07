@@ -14,13 +14,27 @@ let styles = {
 }
 const DEF_THEME = "bg-light";
 
+const parseNote = (note) => {
+  let str = note.trim();
+  if (str === '') {
+    return null;
+  }
+
+  let idx = str.indexOf('\n');
+  if (idx < 0) {
+    return [str, ''];
+  }
+
+  return [str.substr(0,idx), str.substr(idx)]
+}
+
 export default ({model, onChange}) => {
   const [edit, setEdit] = useState(null);
-  const [editText, setEditText] = useState('');
+  const [inputText, setInputText] = useState('');
   const selectedBlock = edit === null ? null : edit.key;
 
-  const handleEditTextChange = (e) => {
-    setEditText(e.target.value);
+  const handleInputTextChange = (e) => {
+    setInputText(e.target.value);
   }
 
   const handleBlockChange = ({type, payload}) => {
@@ -34,7 +48,7 @@ export default ({model, onChange}) => {
         ...model,
         contents: model.contents.filter(item => item.key !== payload.key)
       };
-      onChange({type: 'update', newModel});
+      onChange({type: 'update', payload: newModel});
     }
   }
 
@@ -43,7 +57,7 @@ export default ({model, onChange}) => {
 
     const updatedBlock = {
       "key": "goal",
-      "note": editText,
+      "note": inputText,
       "ref": null
     };
 
@@ -54,15 +68,19 @@ export default ({model, onChange}) => {
         updatedBlock
       ]
     };
-    onChange({type: 'update', newModel});
+    onChange({type: 'update', payload: newModel});
   }
 
   const handleAdd = () => {
-    // TODO validate inputed info
+    let arr = parseNote(inputText);
+    if (arr === null) {
+      onChange({type: 'error', payload: {message: 'Please input correct note.'}});
+      return;
+    }
 
     const newBlock = {
-      "key": "goal",
-      "note": editText,
+      "key": arr[0],
+      "note": arr[1],
       "ref": null
     };
 
@@ -73,10 +91,21 @@ export default ({model, onChange}) => {
         newBlock
       ]
     };
-    onChange({type: 'update', newModel});
+    onChange({type: 'update', payload: newModel});
+    setInputText('');
   }
 
+  const handleCancel = () => {
+    setEdit(null);
+    setInputText('');
+  }
+
+
   const renderActions = () => {
+    if (inputText === '') {
+      return <script />
+    }
+
     if (edit) {
       return (
         <div className="input-group-append">
@@ -88,7 +117,7 @@ export default ({model, onChange}) => {
           <button 
             className="btn btn-outline-default" 
             type="button"
-            onClick={() => setEdit(null)}
+            onClick={() => handleCancel}
           >Cancel</button>
         </div>
       );
@@ -128,8 +157,8 @@ export default ({model, onChange}) => {
       <div className="card-footer" style={{ padding: 0 }}>
         <div className="input-group">
           <textarea 
-            defaultValue={editText}
-            onChange={handleEditTextChange}
+            value={inputText}
+            onChange={handleInputTextChange}
             style={styles.textarea} 
             className="form-control" 
             row="3" />

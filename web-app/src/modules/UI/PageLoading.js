@@ -28,7 +28,7 @@ class PageLoading extends React.Component {
     return (
       <div>
         <div style={styles} />
-        <div style={{zIndex:1001}}>
+        <div style={{zIndex:1001, position:'absolute', marginTop: 52, marginLeft:2}}>
           <div className="spinner-border spinner-border-sm" role="status">
             <span className="sr-only">Loading...</span>
           </div>

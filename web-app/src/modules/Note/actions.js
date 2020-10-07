@@ -1,7 +1,6 @@
 import HttpClient from '../../apis/HttpClient';
 import { Note as NoteApi } from '../../apis/EndPoints';
 import Accions from '../../app/actions';
-import * as Util from '../../utils';
 
 export const types = {
   LOAD: 'NOTE/LOAD',
@@ -25,7 +24,7 @@ export function search({username, keyword, category}) {
         console.log(resp)
         dispatch({
           type: actionName,
-          payload: Util.transformData(resp, "id")
+          payload: resp
         })
 
         dispatch(Accions.UI.hideLoading(actionName));
@@ -51,7 +50,7 @@ export function load({username}) {
         console.log(resp)
         dispatch({
           type: actionName,
-          payload: Util.transformData(resp, "id")
+          payload: resp
         })
 
         dispatch(Accions.UI.hideLoading(actionName));

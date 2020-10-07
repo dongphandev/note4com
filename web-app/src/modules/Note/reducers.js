@@ -1,4 +1,5 @@
 import types from './actions';
+import * as Utils from '../../utils';
 
 export default function note(
     state = {
@@ -7,26 +8,34 @@ export default function note(
     },
     { type, payload }
 ) {
+
+    let sources = state;
+
     switch (type) {
         case types.LOAD:
+            sources = Utils.transformData(payload, "id")
             return {
-                list: payload.list,
-                data: payload.data
+                list: sources.list,
+                data: sources.data
             };
         
         case types.SEARCH:
+            sources = Utils.transformData(payload, "id")
             return {
-                list: payload.list,
-                data: payload.data
+                list: sources.list,
+                data: sources.data
             };
 
         case types.UPDATE:
             return {
-                ...state,
                 data: {
                     ...state.data,
-                    [payload.key]: payload
-                }
+                    [payload.id]: payload
+                },
+                list: [
+                    ...state.list,
+                    payload['id']
+                ]
             };
 
         default:

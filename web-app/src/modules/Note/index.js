@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { search, load, create, update } from './actions';
@@ -58,6 +58,7 @@ class Note extends React.Component {
         </div>
 
         <VSpace />
+
         { list.map((id, i) =>
           <Box key={i} model={data[id]} onChange={this.handleNoteChange} />
         )}
