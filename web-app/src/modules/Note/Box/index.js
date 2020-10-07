@@ -32,7 +32,7 @@ export default ({model, onChange}) => {
       // click delete button
       const newModel = {
         ...model,
-        contents: model.contents.filter(item => item.key != payload.key)
+        contents: model.contents.filter(item => item.key !== payload.key)
       };
       onChange({type: 'update', newModel});
     }
@@ -41,11 +41,39 @@ export default ({model, onChange}) => {
   const handleSave = () => {
     // TODO validate inputed info
 
+    const updatedBlock = {
+      "key": "goal",
+      "note": editText,
+      "ref": null
+    };
+
+    const newModel = {
+      ...model,
+      contents: [
+        ...model.contents,
+        updatedBlock
+      ]
+    };
+    onChange({type: 'update', newModel});
   }
 
   const handleAdd = () => {
     // TODO validate inputed info
 
+    const newBlock = {
+      "key": "goal",
+      "note": editText,
+      "ref": null
+    };
+
+    const newModel = {
+      ...model,
+      contents: [
+        ...model.contents,
+        newBlock
+      ]
+    };
+    onChange({type: 'update', newModel});
   }
 
   const renderActions = () => {
