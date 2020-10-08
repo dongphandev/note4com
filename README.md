@@ -1,2 +1,2 @@
 # note4com
-A note for comparation 
+A tool for noting everything and then for comparising. 
