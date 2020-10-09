@@ -2,7 +2,7 @@ import types from './actions';
 
 export default function auth(
     state = {
-        authenticated: true,
+        authenticated: false,
         token: '',
         owner: '',
         model: {
