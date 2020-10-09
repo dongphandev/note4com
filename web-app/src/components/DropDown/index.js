@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 
-export default ({styles = {}, title = '', items=[] , onClick}) => {
+export default ({styles = {}, title = '', items=[] , onChange}) => {
   const [display, setDisplay] = useState('none');
 
   const handleShow = () => {
@@ -20,15 +20,19 @@ export default ({styles = {}, title = '', items=[] , onClick}) => {
         type="button" aria-haspopup="true" 
         aria-expanded="false"
         onClick={handleShow}
-        onBlur={handleHide}
       >{title}</button>
       <div className="dropdown-menu dropdown-menu-right" style={{display: display}}>
         {items && items.map((item, k)=><button 
             key={k}
             className="dropdown-item" 
             type="button"
-            onClick={() => onClick(item.id)}
+            onClick={() => {handleHide(); onChange(item.id);}}
         >{item.name}</button>)}
+        <button 
+            className="dropdown-item" 
+            type="button"
+            onClick={() => handleHide()}
+        >Close</button>
       </div>
     </div>
   );

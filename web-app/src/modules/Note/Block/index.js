@@ -32,7 +32,7 @@ function Block({ model, selected, onChange }) {
 
   return (
     <blockquote className="blockquote mb-2" style={styles.blockquote}>
-      <DropDown styles={{float:'right'}} items={blockActions} onClick={handleClick} />
+      <DropDown styles={{float:'right'}} items={blockActions} onChange={handleClick} />
       <p>{model.key}</p>
       {notes && notes.map((val, k) => val.trim() !== '' && <footer key={k} className="blockquote-footer">{val}</footer>)}
     </blockquote>

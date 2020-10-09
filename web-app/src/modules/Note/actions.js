@@ -70,14 +70,26 @@ export function create(model) {
       // show loadding
       dispatch(Accions.UI.showLoading(actionName));
 
+      // TODO must be implement at server side
+      const state = getState();
+      const username = state.auth.owner;
+
+      let requestModel = {
+        ...model,
+        username: username
+      };
+
       // submit
-      HttpClient.post(NoteApi.edit(), model)
+      HttpClient.post(NoteApi.edit(), requestModel)
       .then(resp => {
 
         console.log(resp)
         dispatch({
           type: actionName,
-          payload: resp
+          payload: {
+            ...requestModel,
+            id: resp
+          }
         })
 
         dispatch(Accions.UI.hideLoading(actionName));

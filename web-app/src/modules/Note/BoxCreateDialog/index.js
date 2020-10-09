@@ -1,11 +1,4 @@
 import React, {useState} from 'react';
-import DropDown from '../../../components/DropDown';
-
-const styles = {
-  dialog: {
-    position: 'absolute'
-  }
-};
 
 function BoxCreateDialog({ open, onChange }) {
   const [title, setTitle] = useState('');

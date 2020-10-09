@@ -28,13 +28,21 @@ export default function note(
 
         case types.UPDATE:
             return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [payload.id]: payload
+                }
+            };
+        case types.CREATE:
+            return {
                 data: {
                     ...state.data,
                     [payload.id]: payload
                 },
                 list: [
-                    ...state.list,
-                    payload['id']
+                    payload['id'],
+                    ...state.list 
                 ]
             };
 

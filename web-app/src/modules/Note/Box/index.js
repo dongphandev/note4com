@@ -40,7 +40,16 @@ export default ({model, onChange}) => {
   const handleBlockChange = ({type, payload}) => {
     // click update button
     if (type === 'update') {
+
+      let inputTextVal = ''.concat(payload.key);
+      if (payload.note.startsWith('\n')) {
+        inputTextVal = inputTextVal.concat(payload.note);
+      } else {
+        inputTextVal = inputTextVal.concat('\n', payload.note);
+      }
+
       setEdit(payload);
+      setInputText(inputTextVal);
 
     } else if (type === 'delete') {
       // click delete button
@@ -53,22 +62,29 @@ export default ({model, onChange}) => {
   }
 
   const handleSave = () => {
-    // TODO validate inputed info
+    let arr = parseNote(inputText);
+    if (arr === null) {
+      onChange({type: 'error', payload: {message: 'Please input correct note.'}});
+      return;
+    }
 
-    const updatedBlock = {
-      "key": "goal",
-      "note": inputText,
-      "ref": null
+    const newContent = {
+      "key": arr[0],
+      "note": arr[1],
+      "ref": edit.ref
     };
 
     const newModel = {
       ...model,
       contents: [
-        ...model.contents,
-        updatedBlock
+        newContent,
+        ...model.contents.filter(item => item.key !== edit.key)
       ]
     };
+
     onChange({type: 'update', payload: newModel});
+    setEdit(null);
+    setInputText('');
   }
 
   const handleAdd = () => {
@@ -110,14 +126,14 @@ export default ({model, onChange}) => {
       return (
         <div className="input-group-append">
           <button 
-            className="btn btn-outline-secondary" 
+            className="btn btn-outline-primary" 
             type="button"
             onClick={handleSave}
           >Save</button>
           <button 
             className="btn btn-outline-default" 
             type="button"
-            onClick={() => handleCancel}
+            onClick={handleCancel}
           >Cancel</button>
         </div>
       );
@@ -126,7 +142,7 @@ export default ({model, onChange}) => {
     return (
       <div className="input-group-append">
         <button 
-          className="btn btn-outline-secondary" 
+          className="btn btn-outline-primary" 
           type="button"
           onClick={handleAdd}
         >Add</button>
@@ -159,7 +175,10 @@ export default ({model, onChange}) => {
           <textarea 
             value={inputText}
             onChange={handleInputTextChange}
-            style={styles.textarea} 
+            style={{
+              ...styles.textarea,
+              height: inputText !== '' ? 120 : 40
+            }} 
             className="form-control" 
             row="3" />
           {renderActions()}
