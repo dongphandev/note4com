@@ -11,7 +11,7 @@ const styles = {
 
 const blockActions = [
   {
-    id: 'edit',
+    id: 'update',
     name: 'Edit'
   },
   {
@@ -24,14 +24,17 @@ function Block({ model, selected, onChange }) {
   let notes = model.note ? model.note.split('\n') : [];
 
   const handleClick = (actionId) => {
-    console.log(actionId);
+    onChange({
+      type: actionId,
+      payload: model
+    });
   }
 
   return (
     <blockquote className="blockquote mb-2" style={styles.blockquote}>
       <DropDown styles={{float:'right'}} items={blockActions} onClick={handleClick} />
       <p>{model.key}</p>
-      {notes && notes.map((val, k) => val.trim() != '' && <footer key={k} className="blockquote-footer">{val}</footer>)}
+      {notes && notes.map((val, k) => val.trim() !== '' && <footer key={k} className="blockquote-footer">{val}</footer>)}
     </blockquote>
   );
 }

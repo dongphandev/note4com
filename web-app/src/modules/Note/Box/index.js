@@ -42,7 +42,7 @@ export default ({model, onChange}) => {
     if (type === 'update') {
       setEdit(payload);
 
-    } else {
+    } else if (type === 'delete') {
       // click delete button
       const newModel = {
         ...model,
