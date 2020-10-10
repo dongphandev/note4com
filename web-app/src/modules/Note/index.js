@@ -32,7 +32,7 @@ class Note extends React.Component {
 
   handleLoad = () => {
     let username = this.props.auth.owner;
-    this.props.load({username});
+    this.props.load({ username });
   }
 
   handleSearch = (text) => {
@@ -44,21 +44,21 @@ class Note extends React.Component {
   }
 
   handleAddBox = () => {
-    this.setState({creatingBox: true});
+    this.setState({ creatingBox: true });
   }
 
-  handleNoteChange = ({type, payload}) => {
+  handleNoteChange = ({ type, payload }) => {
     if (type === 'update') {
       this.props.update(payload);
     }
   }
 
-  handleBoxCreateDialog = ({type, payload}) => {
+  handleBoxCreateDialog = ({ type, payload }) => {
     if (type === 'create') {
       this.props.create(payload);
     }
 
-    this.setState({creatingBox: false});
+    this.setState({ creatingBox: false });
   }
 
   componentWillMount() {
@@ -75,15 +75,20 @@ class Note extends React.Component {
         <SearchBox style={{ paddingTop: 10 }} onSearch={this.handleSearch} />
 
         <div style={{ textAlign: "center" }}>
-          <button style={{ width: 200 }} type="button" className="btn btn-primary" onClick={this.handleAddBox} ><strong>+</strong></button>
+          <button type="button" className="btn" onClick={this.handleAddBox}
+          >
+            <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-plus-circle-fill" fill="#007bff" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+          </button>
         </div>
 
         <VSpace />
         { list.map((id, i) =>
-          <Box key={i} 
-            theme={'text-white bg-info'} 
-            model={data[id]} 
-            onChange={this.handleNoteChange} 
+          <Box key={i}
+            theme={'text-white bg-info'}
+            model={data[id]}
+            onChange={this.handleNoteChange}
           />
         )}
 
@@ -99,5 +104,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { load, search, create, update}
+  { load, search, create, update }
 )(Note);
