@@ -80,7 +80,11 @@ class Note extends React.Component {
 
         <VSpace />
         { list.map((id, i) =>
-          <Box key={i} model={data[id]} onChange={this.handleNoteChange} />
+          <Box key={i} 
+            theme={'text-white bg-info'} 
+            model={data[id]} 
+            onChange={this.handleNoteChange} 
+          />
         )}
 
       </div>

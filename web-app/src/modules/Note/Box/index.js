@@ -28,7 +28,7 @@ const parseNote = (note) => {
   return [str.substr(0,idx), str.substr(idx)]
 }
 
-export default ({model, onChange}) => {
+export default ({model, onChange, theme=DEF_THEME}) => {
   const [edit, setEdit] = useState(null);
   const [inputText, setInputText] = useState('');
   const selectedBlock = edit === null ? null : edit.key;
@@ -118,9 +118,9 @@ export default ({model, onChange}) => {
 
 
   const renderActions = () => {
-    if (inputText === '') {
-      return <script />
-    }
+    // if (inputText === '') {
+    //   return <script />
+    // }
 
     if (edit) {
       return (
@@ -152,10 +152,10 @@ export default ({model, onChange}) => {
 
   return (
     <div className="card mb-3">
-      <div className={`card-header ${DEF_THEME}`}>
+      <div className={`card-header ${theme}`}>
         {model.title}
         <span style={{ float: "right" }}>
-          <button type="button" className={`btn btn-sm btn-link ${DEF_THEME}`}>
+          <button type="button" className={`btn btn-sm btn-link ${theme}`}>
             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-share-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
             </svg>
