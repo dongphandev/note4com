@@ -27,6 +27,8 @@ function Note() {
 
         <VSpace />
         <StupidTable />
+        <StupidTable />
+        <StupidTable />
     </div>
   );
 }
