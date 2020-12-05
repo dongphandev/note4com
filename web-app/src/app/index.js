@@ -1,17 +1,19 @@
 import React from 'react';
 
-import Notification from '../modules/UI/Notification';
-import PageLoading from '../modules/UI/PageLoading';
+import Auth from './modules/Auth';
+import Notification from './modules/UI/Notification';
+import PageLoading from './modules/UI/PageLoading';
+import Header from './modules/Header';
 
 import './styles.scss'
 
 function App(props) {
-  console.log(props);
   return (
     <div className="app">
+      <Auth />
       <Notification />
       <PageLoading />
-
+      <Header />
       {props.children}
     </div>
   );

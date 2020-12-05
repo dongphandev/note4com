@@ -1,77 +1,82 @@
 // https://github.com/axios/axios
 import axios from 'axios';
+import Config from '../config';
 
-export const ApiError = {
-  request: "request",
-  response: "response",
-  unknown: "unknown"
-}
+export const ErrorCodes = {
+  request: 'request',
+  response: 'response',
+  unknown: 'unknown'
+};
 
-// basic configs
-// axios.defaults.baseURL = 'http://localhost:7070';
-axios.defaults.timeout = 60000; // 60 seconds
-
-// Add a request interceptor
-axios.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  // config.headers['X-AUTH-TOKEN'] = getLocalData('AUTH-TOKEN');
-  config.headers['Content-Type'] = 'application/json';
-  return config;
-}, function (error) {
-  // Do something with request error
-  return handleError(error);
+/////////////////////////////////////////////////////////////////
+const instance = axios.create({
+  baseURL: Config.baseURL,
+  timeout: Config.requestTimeOut,
+  headers: {
+    'Content-Type': 'application/json',
+    accept: 'application/json',
+    lang: 'vi'
+  }
 });
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
-  console.log(response);
-  // Do something with response data
-  // if (response.data.error) {
-  //   const error = response.data.error;
-  //   return Promise.reject({ code: error.code, message: error.message });
-  // }
-  return response.data;
-}, function (error) {
-  // Do something with response error
-  return handleError(error);
-});
+instance.interceptors.response.use(
+  function(response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    console.log(response);
 
-function handleError(error) {
-  console.log(error);
-  return Promise.reject({ code: ApiError.unknown, message: error.message, error });
+    const status = response.status;
+    if (status < 200 || status > 299) {
+      return Promise.reject(response);
+    }
+
+    return response.data;
+  },
+  function(error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    console.log(`error: ${error}`);
+    return Promise.reject(error);
+  }
+);
+
+async function secureRequest(config={}) {
+  return Config.getJwtToken().then(jwt=> {
+    return {
+      ...config,
+      headers: {
+        ...config.headers,
+        Authorization: jwt
+      }
+    };
+  });
 }
 
-
-export function request(config) {
-  return axios.request(config);
+export async function request(config) {
+  return instance.request(config);
 }
 
-export function get(url, config) {
-  return axios.get(url, config);
+export async function get(url, config) {
+  return secureRequest(config).then(authConfig => instance.get(url, authConfig));
 }
 
-export function remove(url, config) {
-  return axios.delete(url, config)
+export async function remove(url, config) {
+  return secureRequest(config).then(authConfig => instance.delete(url, authConfig));
 }
 
-// axios#head(url[, config])
-
-// axios#options(url[, config])
-
-export function post(url, data, config) {
-  return axios.post(url, JSON.stringify(data), config);
+export async function post(url, data, config) {
+  return secureRequest(config).then(authConfig => instance.post(url, JSON.stringify(data), authConfig));
 }
 
-export function put(url, data, config) {
-  return axios.put(url, JSON.stringify(data), config);
+export async function put(url, data, config) {
+  return secureRequest(config).then(authConfig => instance.put(url, JSON.stringify(data), authConfig));
 }
-
-// axios#patch(url[, data[, config]])
-
 
 export default {
+  request,
   get,
   remove,
   post,
-  put,
-}
+  put
+};
