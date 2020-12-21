@@ -1,7 +1,7 @@
 import { types } from './actions';
 
 const initialState = {
-  authenticated: false,
+  authenticated: true,
   token: '',
   owner: '',
   model: { }
